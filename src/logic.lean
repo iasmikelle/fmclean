@@ -1,4 +1,3 @@
-
 section propositional
 
 variables P Q R : Prop
@@ -103,19 +102,39 @@ end
 theorem impl_as_contrapositive :
   (P → Q) → (¬Q → ¬P)  :=
 begin
-  sorry,
+  intro pimplq,
+  intro nq,
+  intro p,
+  have q : Q := pimplq p,
+  contradiction,
 end
 
 theorem impl_as_contrapositive_converse :
   (¬Q → ¬P) → (P → Q)  :=
 begin
-  sorry,
+  intro nqimplnp,
+  intro p,
+  by_contradiction,
+  have np := nqimplnp h,
+  contradiction,
 end
 
 theorem contrapositive_law :
   (P → Q) ↔ (¬Q → ¬P)  :=
 begin
-  sorry,
+  split,
+
+  intro pimplq,
+  intro nq,
+  intro p,
+  have q := pimplq p,
+  contradiction,
+
+  intro nqimplnp,
+  intro p,
+  by_contradiction,
+  have np := nqimplnp h,
+  contradiction,
 end
 
 
@@ -126,7 +145,16 @@ end
 theorem lem_irrefutable :
   ¬¬(P∨¬P)  :=
 begin
-  sorry,
+  intro npounp,
+  have pounp : P ∨ ¬P,
+  right,
+  intro p,
+  have lem: P ∨ ¬P,
+  left,
+  assumption,
+  contradiction,
+  contradiction,
+
 end
 
 
@@ -137,7 +165,14 @@ end
 theorem peirce_law_weak :
   ((P → Q) → P) → ¬¬P  :=
 begin
-  sorry,
+  intro pimplqimplp,
+  intro np,
+  have pimplq: P → Q,
+  intro p,
+  contradiction,
+
+  have p := pimplqimplp pimplq,
+  contradiction,
 end
 
 
@@ -148,13 +183,24 @@ end
 theorem disj_as_negconj :
   P∨Q → ¬(¬P∧¬Q)  :=
 begin
-  sorry,
+  intro pouq,
+  intro npenq,
+  cases npenq with np nq,
+  cases pouq with p q,
+  contradiction,
+  contradiction,
+
 end
 
 theorem conj_as_negdisj :
   P∧Q → ¬(¬P∨¬Q)  :=
 begin
-  sorry,
+  intro peq,
+  intro npounq,
+  cases peq with p q,
+  cases npounq with np nq,
+  contradiction,
+  contradiction,
 end
 
 
@@ -165,13 +211,31 @@ end
 theorem demorgan_disj :
   ¬(P∨Q) → (¬P ∧ ¬Q)  :=
 begin
-  sorry,
+  intro npouq,
+  split,
+
+  intro p,
+  have pouq: P∨Q,
+  left,
+  assumption,
+  contradiction,
+
+  intro q,
+  have pouq: P∨Q,
+  right,
+  assumption,
+  contradiction,
 end
 
 theorem demorgan_disj_converse :
   (¬P ∧ ¬Q) → ¬(P∨Q)  :=
 begin
-  sorry,
+  intro npenq,
+  intro pouq,
+  cases  npenq with np nq,
+  cases pouq with p q,
+  contradiction,
+  contradiction,
 end
 
 theorem demorgan_conj :
